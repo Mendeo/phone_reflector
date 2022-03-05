@@ -27,11 +27,16 @@ echo("Высота основания", height);
 
 
 reflector();
+//twoStands();
 //stand();
-translate([-width / 3, 0, 0])
-standTurned();
-translate([width / 3, 0, 0])
-standTurned();
+
+module twoStands()
+{
+	translate([-width / 3, 0, 0])
+	standTurned();
+	translate([width / 3, 0, 0])
+	standTurned();
+}
 
 module standTurned()
 {
