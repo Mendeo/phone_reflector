@@ -52,9 +52,9 @@ module reflector()
 {
 	difference()
 	{
-		#translate([-width / 2, -width / 2, 0])
+		translate([-width / 2, -width / 2, 0])
 		cube([width, width, height - 0.01]);
-		%translate([0, 0, height - hp])
+		translate([0, 0, height - hp])
 		parabolic(d, f);
 	}
 	//Пластина
