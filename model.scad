@@ -1,7 +1,7 @@
 $fn = 60;
 
 width = 180; //Ширина большого квадрата.
-phoneHeight = 80; //Высота, на которой должен распологаться телефон.
+phoneHeight = 50; //Высота, на которой должен распологаться телефон.
 phonePlateWidth = 50; //Ширина платформы, на которую помещается телефон.
 wLeg = 3; //Толщина ножки по высоте и одновременно толщина пластины, на котороую помещается телефон.
 tLeg = 3; //Толщина ножки в плоскости зеркала.
@@ -19,9 +19,11 @@ deltaStand = 0.5; //Зазор между основным квадратом и
 SQRT_2 = sqrt(2);
 d = width - 2 * mDelta; //Диаметр зеркала.
 echo("Диаметр зеркала", d);
-f = phoneHeight - dh - foilT; //Высота фокуса от вершины параболы.
-hp = d * d / (16 * f); //Глубина паболы.
+ff = phoneHeight - dh; //Высота фокуса от вершины параболы.
+hp = d * d / (16 * ff) + foilT; //Глубина паболы.
 echo("Глубина зеркала", hp);
+f = d * d / (16 * hp);
+echo("Высота фокуса без фольги", f + dh); 
 height = hp + dh; //Высота основания
 echo("Высота основания", height);
 
@@ -50,9 +52,9 @@ module reflector()
 {
 	difference()
 	{
-		translate([-width / 2, -width / 2, 0])
+		#translate([-width / 2, -width / 2, 0])
 		cube([width, width, height - 0.01]);
-		translate([0, 0, height - hp])
+		%translate([0, 0, height - hp])
 		parabolic(d, f);
 	}
 	//Пластина
@@ -103,7 +105,6 @@ module reflector()
 	//d - диаметр параболы, f - расстояние до точки фокуса.
 	module parabolic(d, f)
 	{
-		hp = d * d / (16 * f);
 		pPath = concat([for (i = [0 : $fn])
 		let (delta = d / (2 * $fn),
 			x = i * delta,
