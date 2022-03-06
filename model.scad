@@ -1,4 +1,4 @@
-$fn = 60;
+$fn = 360;
 
 width = 180; //Ширина большого квадрата.
 phoneHeight = 50; //Высота, на которой должен распологаться телефон.
@@ -29,8 +29,8 @@ echo("Высота основания", height);
 
 
 reflector();
-translate([0, 0, height])
-feed();
+//translate([0, 0, height])
+//feed();
 //twoStands();
 //stand();
 
