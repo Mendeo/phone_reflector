@@ -1,4 +1,4 @@
-$fn = 360;
+$fn = 60;
 
 width = 180; //Ширина большого квадрата.
 phoneHeight = 50; //Высота, на которой должен распологаться телефон.
@@ -47,6 +47,8 @@ echo("Высота основания", height);
 
 
 reflector();
+translate([0, 0, height])
+feed();
 //twoStands();
 //stand();
 
@@ -75,8 +77,25 @@ module reflector()
 		translate([0, 0, height - hp])
 		parabolic(d, f);
 	}
+	//d - диаметр параболы, f - расстояние до точки фокуса.
+	module parabolic(d, f)
+	{
+		pPath = concat([for (i = [0 : $fn])
+		let (delta = d / (2 * $fn),
+			x = i * delta,
+			y =  x * x / (4 * f)) [x, y]], [[0, hp]]);
+
+		rotate_extrude()
+		{
+			polygon(pPath);
+		}
+	}
+}
+
+module feed()
+{
 	//Пластина
-	translate([-phonePlateWidth / 2, -phonePlateWidth / 2, phoneHeight - wLeg])
+	translate([-phonePlateWidth / 2, -phonePlateWidth / 2, phoneHeight - wLeg - height])
 	plate();
 	
 	legOnMirror();
@@ -89,7 +108,7 @@ module reflector()
 	
 	module legOnMirror()
 	{
-		translate([-width / 2 + (tLeg / 2) / SQRT_2, -width / 2 + (tLeg / 2) / SQRT_2, height])
+		translate([-width / 2 + (tLeg / 2) / SQRT_2, -width / 2 + (tLeg / 2) / SQRT_2, 0])
 		rotate([0, 0, 45])
 		leg(wLeg, tLeg, (width - phonePlateWidth) / SQRT_2, phoneHeight - height);
 	}
@@ -122,20 +141,10 @@ module reflector()
 		translate([0, t / 2, 0])
 		rotate([90, 0, 0])
 		linear_extrude(t)
-		polygon([[0, 0], [0, -w], [x, h - w], [x, h], [0, 0]]);
-		//polygon([[0, 0], [w * x / h, 0], [0, -w]]);
-	}
-	//d - диаметр параболы, f - расстояние до точки фокуса.
-	module parabolic(d, f)
-	{
-		pPath = concat([for (i = [0 : $fn])
-		let (delta = d / (2 * $fn),
-			x = i * delta,
-			y =  x * x / (4 * f)) [x, y]], [[0, hp]]);
-
-		rotate_extrude()
+		difference()
 		{
-			polygon(pPath);
+			polygon([[0, 0], [0, -w], [x, h - w], [x, h], [0, 0]]);
+			polygon([[0, 0], [w * x / h, 0], [0, -w]]);
 		}
 	}
 }
