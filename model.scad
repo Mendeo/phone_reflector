@@ -13,7 +13,7 @@ foilT = 0.0; //Толщина алюминиевой фольги.
 mDelta = 3; //Расстояние от края квадрата до параболы.
 wStand = 30; //Длина подставки.
 lStand = 20; //Насколько подставка выступает над основным квадратом.
-hStand = 20; //Высота подставки.
+hStand = 18; //Высота подставки.
 deltaStand = 0.5; //Зазор между основным квадратом и подставкой
 
 SQRT_2 = sqrt(2);
@@ -29,9 +29,9 @@ echo("Высота основания", height);
 
 
 reflector();
-//translate([0, 0, height])
-//feed();
-//twoStands();
+translate([0, 0, height])
+feed();
+twoStands();
 //stand();
 
 module twoStands()
